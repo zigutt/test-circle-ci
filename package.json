@@ -1,0 +1,16 @@
+{
+    "name": "bernstein-report-download",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+      "test": "jest"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+      "bootstrap": "^4.3.1",
+      "jest": "^26.6.3",
+      "jquery": "^3.4.1"
+    }
+  }
