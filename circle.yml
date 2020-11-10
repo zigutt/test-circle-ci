@@ -1,30 +1,7 @@
-version: 1
-jobs:
-  build:
-    environment:
-      # emulation of the v1 artifacts
-      CIRCLE_ARTIFACTS: /tmp/circleci-artifacts
-    docker: # use the docker executor type
-      - build: /Dockerfile # base image, see https://circleci.com/docs/2.0/circleci-images/
-    steps:
-      - checkout # check out the code in the project directory
-      - setup_remote_docker # allow to use docker commands.
-      - run:
-          name: Install MDL Tools
-          command: curl -s -k -L -o tmp.zip https://github.mdl.cloud/deployer/build-tools/archive/master.zip && unzip tmp.zip && rm tmp.zip
-      - run:
-          name: MDL Build
-          command: mkdir -p $CIRCLE_ARTIFACTS && ./build-tools-master/docker/build.sh
-      - deploy:
-          name: MDL Deploy
-          command: |
-            if [ "${CIRCLE_BRANCH}" == "CPATC-8833-Deploy_new_bernstein_download_service" ]; then
-              ./build-tools-master/docker/push.sh
-            fi
-      - store_artifacts:
-          path: /tmp/circleci-artifacts
-          destination: "$CIRCLE_ARTIFACTS/"
-# notify deployer
-notify:
-  webhooks:
-    - url: https://deployer.mdl.cloud/trigger
+version: 2.1
+orbs:
+  node: circleci/node@3.0.0
+workflows:
+  node-tests:
+    jobs:
+      - node/test
